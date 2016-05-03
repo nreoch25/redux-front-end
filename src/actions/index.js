@@ -1,7 +1,7 @@
 import axios from "axios";
 import { browserHistory } from "react-router";
-import { AUTH_USER } from "./types";
-const API_URL = "http://localhost:3090";
+import { AUTH_USER, AUTH_ERROR } from "./types";
+const API_URL = "http://localhost:8000";
 
 export function signinUser({ email, password }) {
   return (dispatch) => {
@@ -19,6 +19,14 @@ export function signinUser({ email, password }) {
       .catch(() => {
         //If Request is bad...
         // - Show an error to the user
+        dispatch(authError("Invalid Login Credentials"));
       });
   }
+}
+
+export function authError(error) {
+  return {
+    type: AUTH_ERROR,
+    payload: error
+  };
 }
